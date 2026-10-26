@@ -1,0 +1,17 @@
+name: Test APWorld
+on:
+  push:
+    branches: [ dev-best-trainer*, future/*, ci ]
+  pull_request:
+    branches: [ dev-best-trainer*, future/* ]
+
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: Eijebong/ap-actions/ap-tests@main
+        with:
+          apworld-path: worlds/best_trainer
+          ap-version: '0.6.8'
+          python-version: '3.13'

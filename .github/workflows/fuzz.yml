@@ -1,0 +1,17 @@
+name: Fuzz APWorld
+on:
+  push:
+    branches: [ dev-best-trainer*, future/*, ci ]
+  pull_request:
+    branches: [ dev-best-trainer*, future/* ]
+
+
+jobs:
+  fuzz:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: Eijebong/ap-actions/fuzz@main
+        with:
+          apworld-path: worlds/best_trainer
+          ap-version: '0.6.8'
+          python-version: '3.13'

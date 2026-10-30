@@ -15,7 +15,7 @@ class BestTrainerWorld(World):
     Pick your team, compete in tournaments, unlock better Pokemon, and become the best trainer ever !
     """
     game = "Best Trainer"
-    apworld_version = "1.0.0"
+    apworld_version = "0.1.1"
     item_name_to_id = {name: data.code for name, data in item_table.items()}
     location_name_to_id = {name: data.id for name, data in location_table.items()}
     options_dataclass = BestTrainerOptions

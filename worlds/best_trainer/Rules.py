@@ -140,6 +140,11 @@ def set_rules(world: "BestTrainerWorld"):
                     lambda state, required_key=data.required_key: (state.has(req, world.player) for req in required_key),
                     "and"
                 )
+            add_rule(
+                loc,
+                lambda state, level=region_data.level: draft_pool_power(state, world, level),
+                "and"
+            )
         
         if data.category & CheckCategory.ACHIEVEMENT:
             if location_name == "Win 5 battles":
@@ -217,20 +222,6 @@ def set_rules(world: "BestTrainerWorld"):
                     loc,
                     lambda state: cups_available_per_tier(state, world, CupLevel.REGION, 1)
                 )
-            if data.required_key:
-                add_rule(
-                    loc,
-                    lambda state, key_name=data.required_key: state.has(key_name, world.player),
-                    "and"
-                )
-
-        elif region_data:
-            # Drafting power for the cup level
-            add_rule(
-                loc,
-                lambda state, level=region_data.level: draft_pool_power(state, world, level),
-                "and"
-            )
 
 
 

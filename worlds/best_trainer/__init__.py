@@ -1,5 +1,5 @@
 from BaseClasses import Item, ItemClassification, Region, Entrance, Tutorial, Location, MultiWorld
-from .Items import item_table, create_item, create_itempool, junk_weights
+from .Items import item_table, create_item, create_itempool, junk_weights, generate_starting_draft_types
 from .Locations import location_table, event_locs, is_location_valid, gen_location_list, get_total_locations, create_events
 from .Rules import set_rules
 from .Options import BestTrainerOptions, slot_data_options, adjust_options, RegionsAvailables, Goal, create_option_groups
@@ -29,6 +29,7 @@ class BestTrainerWorld(World):
 
     def generate_early(self):
         adjust_options(self)
+        self.starting_types: List[str] = []
 
         # Starting cup
         if self.options.RegionsAvailables.value == 1 or self.options.RegionsAvailables.value == 0:
@@ -36,11 +37,17 @@ class BestTrainerWorld(World):
         if self.options.RegionsAvailables.value == 2 or self.options.RegionsAvailables.value == 0:
             self.multiworld.push_precollected(self.create_item("Local Cup Unlock : Pallet Town"))
             
-        self.multiworld.push_precollected(self.create_item("Draft : Normal Type"))
-        self.multiworld.push_precollected(self.create_item("Draft : Fire Type"))
-        self.multiworld.push_precollected(self.create_item("Draft : Grass Type"))
-        self.multiworld.push_precollected(self.create_item("Draft : Water Type"))
-        self.multiworld.push_precollected(self.create_item("Draft : Flying Type"))
+        self.starting_types = generate_starting_draft_types(self)
+
+        for type_name in self.starting_types:
+            self.multiworld.push_precollected(self.create_item(type_name))
+
+        #self.multiworld.push_precollected(self.create_item("Draft : Normal Type"))
+        #self.multiworld.push_precollected(self.create_item("Draft : Fire Type"))
+        #self.multiworld.push_precollected(self.create_item("Draft : Grass Type"))
+        #self.multiworld.push_precollected(self.create_item("Draft : Water Type"))
+        #self.multiworld.push_precollected(self.create_item("Draft : Flying Type"))
+        #self.multiworld.push_precollected(self.create_item("Draft : Bug Type"))
 
 
     def create_regions(self):
@@ -69,7 +76,8 @@ class BestTrainerWorld(World):
     def fill_slot_data(self) -> dict:
         return {
             "apworld_version": self.apworld_version,
-
+            
+            "goal": self.options.Goal.value,
             "regions_availables": self.options.RegionsAvailables.value,
             "draft_change_available": self.options.DraftChangeAvailable.value,
             "trainer_round_sanity": self.options.TrainerRoundSanity.value,
@@ -78,5 +86,8 @@ class BestTrainerWorld(World):
             "number_of_starting_types": self.options.NumberOfStartingTypes.value,
             "add_extra_draft_types_items": self.options.AddExtraDraftTypesItems.value,
             "lock_draft_power": self.options.LockDraftPower.value,
+            "base_ai_modifier": self.options.AIModifier.value,
+            "maturity_multiplier": self.options.MaturityMultiplier.value,
+            "battle_pokemon_selected": self.options.BattlePokemonSelected.value,
         }
     

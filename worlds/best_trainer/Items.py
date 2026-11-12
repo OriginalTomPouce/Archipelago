@@ -9,6 +9,54 @@ if TYPE_CHECKING:
     from . import BestTrainerWorld
 
 
+def generate_starting_draft_types(world: "BestTrainerWorld") -> List[str]:
+    
+    starting_draft_types: List[str] = []
+
+    shuffling_draft_types: List[str] = []
+    
+    if (world.options.DraftTypes.value == 0):
+        return []
+    
+    if (world.options.DraftTypes.value == 2):
+        starting_draft_types = ["Draft : Normal Type", "Draft : Fire Type", "Draft : Grass Type", "Draft : Water Type", "Draft : Bug Type", "Draft : Flying Type"]
+        return starting_draft_types
+
+    # We get the starting types
+    # If add extra types is enabled, we add more common types to the starting types
+    for name in item_table.keys():
+        number_to_push = 1
+        item_group: str = item_table.get(name).group
+        if item_group != "Draft Type":
+            continue
+        if world.options.AddExtraDraftTypesItems:
+            if name in draft_groups.get("Common"):
+                number_to_push = 3
+            if name in draft_groups.get("Rare"):
+                number_to_push = 2
+
+        for _ in range(number_to_push):
+            shuffling_draft_types.append(name)
+
+    number_to_pick = world.options.NumberOfStartingTypes.value
+
+    # We pick the starting types using the shuffling_draft_types table
+    for _ in range(number_to_pick):
+        picked = world.random.choice(shuffling_draft_types)
+        starting_draft_types.append(picked)
+
+        #We remove every draft type with the same name
+        i = 0
+        while i < len(shuffling_draft_types):
+            if shuffling_draft_types[i] == picked:
+                shuffling_draft_types.pop(i)
+            else:
+                i += 1
+
+    return starting_draft_types
+
+
+
 def create_itempool(world: "BestTrainerWorld") -> List[Item]:
     itempool: List[Item] = []
 
@@ -47,13 +95,12 @@ def create_itempool(world: "BestTrainerWorld") -> List[Item]:
             continue
         if item_cat & ItemCategory.JOHTO and world.options.RegionsAvailables.value == 2:
             continue
-        if item_group == "Draft Type" and world.options.DraftTypes.value == 0:
+        if item_group == "Draft Type" and (world.options.DraftTypes.value == 0 or name in world.starting_types):
             continue
 
         if item_group == "Draft Type" and world.options.AddExtraDraftTypesItems:
             if name in draft_groups.get("Common"):
-                continue
-                #number_to_push = 3
+                number_to_push = 3
             if name in draft_groups.get("Rare"):
                 number_to_push = 2
 
@@ -197,6 +244,7 @@ draft_groups = {
     "Rare" : {"Draft : Electric Type", "Draft : Fighting Type", "Draft : Ground Type", "Draft : Rock Type", "Draft : Poison Type", "Draft : Psychic Type"},
     "Legendary" : {"Draft : Ice Type", "Draft : Ghost Type", "Draft : Dragon Type", "Draft : Steel Type", "Draft : Dark Type", "Draft : Fairy Type"},
 }
+
 
 item_frequencies = {
     "Draft Point": 2,

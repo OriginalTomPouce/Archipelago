@@ -82,7 +82,7 @@ class NumberOfStartingTypes(Range):
     Minimum number is 1
     Maximum is 18"""
     display_name = "Number of Starting Types"
-    range_start = 1
+    range_start = 3
     range_end = 18
     default = 5
 
@@ -100,6 +100,36 @@ class LockDraftPower(Toggle):
 class AddAchievements(Toggle):
     """If enabled, achievements will send a check."""
     display_name = "Add Achievements"
+    
+    
+class AIModifier(Range):
+    """Define the base difficulty of the game AI.
+    Minimum number is 0
+    Maximum is 5"""
+    display_name = "Battle Pokémon Selected"
+    range_start = 0
+    range_end = 5
+    default = 1
+
+class BattlePokemonSelected(Range):
+    """Define how many Pokémon are picked for every battle. Default value is 3.
+    Minimum number is 1
+    Maximum is 6"""
+    display_name = "Battle Pokémon Selected"
+    range_start = 1
+    range_end = 6
+    default = 3
+    
+class MaturityMultiplier(Range):
+    """Define the mutplier of the maturty points gained during the journey.and
+    Maturity is a mechanic that add stats points to your Pokemon, in the similar way the Gen1 EVs mechanics does.
+    Base multiplier is 10 (x1), Max is 50 (x5)
+    Minimum number is 0
+    Maximum is 50"""
+    display_name = "Maturity Multiplier"
+    range_start = 0
+    range_end = 50
+    default = 10
 
 @dataclass
 class BestTrainerOptions(PerGameCommonOptions):
@@ -114,6 +144,9 @@ class BestTrainerOptions(PerGameCommonOptions):
     NumberOfStartingTypes:      NumberOfStartingTypes
     AddExtraDraftTypesItems:    AddExtraDraftTypesItems
     LockDraftPower:             LockDraftPower
+    AIModifier:                 AIModifier
+    MaturityMultiplier:         MaturityMultiplier
+    BattlePokemonSelected:      BattlePokemonSelected
 
 
 best_trainer_option_groups: Dict[str, List[Any]] = {
@@ -122,6 +155,8 @@ best_trainer_option_groups: Dict[str, List[Any]] = {
     "Checks Options": [TrainerRoundSanity, AddAchievements],
 
     "Item Options": [DraftChangeAvailable, AddExtraDraftTypesItems],
+
+    "Ingame Options": [AIModifier, MaturityMultiplier, BattlePokemonSelected],
 }
 
 
@@ -135,4 +170,7 @@ slot_data_options: List[str] = [
     "LockDraftPower",
     "DraftChangeAvailable",
     "AddExtraDraftTypesItems",
+    "AIModifier",
+    "BattlePokemonSelected",
+    "MaturityMultiplier",
 ]

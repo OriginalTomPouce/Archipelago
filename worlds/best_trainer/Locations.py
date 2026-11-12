@@ -469,7 +469,7 @@ achievements_locations = {
     
     "Beat Brock": LocData(2000502001, CheckCategory.KANTO + CheckCategory.ACHIEVEMENT, "City Cup Pewter City", "City Cup Unlock : Pewter City"),
     "Beat Misty": LocData(2000502002, CheckCategory.KANTO + CheckCategory.ACHIEVEMENT, "Local Cup Cerulean City", "Local Cup Unlock : Cerulean City"),
-    "Beat Bob": LocData(2000502003, CheckCategory.KANTO + CheckCategory.ACHIEVEMENT, "Local Cup Vermilion City", "Local Cup Unlock : Vermilion City"),
+    "Beat Surge": LocData(2000502003, CheckCategory.KANTO + CheckCategory.ACHIEVEMENT, "Local Cup Vermilion City", "Local Cup Unlock : Vermilion City"),
     "Beat Erika": LocData(2000502004, CheckCategory.KANTO + CheckCategory.ACHIEVEMENT, "City Cup Celadon City", "City Cup Unlock : Celadon City"),
     "Beat Jeanine": LocData(2000502005, CheckCategory.KANTO + CheckCategory.ACHIEVEMENT, "City Cup Fuchsia City", "City Cup Unlock : Fuchsia City"),
     "Beat Sabrina": LocData(2000502006, CheckCategory.KANTO + CheckCategory.ACHIEVEMENT, "City Cup Saffron City", "City Cup Unlock : Saffron City"),

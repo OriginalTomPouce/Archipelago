@@ -48,9 +48,9 @@ draft_logic = {
     CupLevel.MISC: [0, 0],
     CupLevel.EXTRA: [0, 0],
     CupLevel.LOCAL: [0, 0],
-    CupLevel.CITY: [1, 5],
-    CupLevel.SUBREGION: [3, 11],
-    CupLevel.REGION: [5, 17],
+    CupLevel.CITY: [1, 6],
+    CupLevel.SUBREGION: [3, 10],
+    CupLevel.REGION: [5, 15],
     CupLevel.WORLD: [6, 18],
     }
 
